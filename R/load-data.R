@@ -9,8 +9,10 @@
 #' @examples
 #' parse.fname('results-1-simple.csv', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
 parse.fname <- function(fname, pattern, fields) {
+  assert(length(fields) >= 1, 'Empty field list')
   m <- stringr::str_match(fname, pattern)
-  stopifnot(length(m) == length(fields) + 1)
+  assert(length(m) == length(fields) + 1, 'Wrong number of fields')
+  assert(all(is.na(m)) == FALSE, 'Pattern did not match file name')
   return(setNames(as.list(m[2:length(m)]), fields))
 }
 
@@ -51,7 +53,7 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
 #' @examples
 #' load.data('.', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
 load.data <- function(path, pattern, fields, custom.func = NULL) {
-  stopifnot(length(fields) > 0)
+  assert(length(fields) >= 1, 'Empty field list')
   file.list <- list.files(path, pattern, recursive = T, full.names = T)
   dt.list <- lapply(file.list, function(fname) { load.data.file(fname, pattern, fields, custom.func) })
   do.call(rbind, dt.list)
