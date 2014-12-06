@@ -4,7 +4,7 @@
 \alias{load.data}
 \title{Loads data from multiple CSV files and combines the data into a data.table}
 \usage{
-load.data(path, pattern, fields, custom.func = NULL)
+load.data(path, pattern, fields, local.func = NULL, global.func = NULL)
 }
 \arguments{
 \item{path}{Path where to search for the CSV files.}
@@ -14,8 +14,11 @@ the fields values too.}
 
 \item{fields}{Fields that uniquely identify the data from a CSV file.}
 
-\item{custom.func}{Custom function to be used when processing a single CSV
+\item{local.func}{Custom function to be called after reading a single CSV
 file. Defaults to NULL.}
+
+\item{global.func}{Custom function to be called after all the data tables
+have been merged into a single one. Defaults to NULL.}
 }
 \value{
 A data.table object containing the data read from the CSV files.

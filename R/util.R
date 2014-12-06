@@ -9,3 +9,19 @@
 assert <- function(expr, msg) {
   if (!expr) stop(msg, call. = F) 
 }
+
+#' Curries a function
+#'
+#' Curries a function. See http://en.wikipedia.org/wiki/Currying for more
+#' information.
+#' @param func The function to curry.
+#' @param ... The parameters to use (named parameters can be used).
+#' @return The curried function.
+#' @export
+#' @examples
+#' curry(function(x, y) { x + y }, x = 1)(2) # = 3
+#' curry(log, base = 2)(16) # = 4
+curry <- function (func, ...) {
+  .orig = list(...)
+  function(...) do.call(func, c(.orig, list(...)))
+}

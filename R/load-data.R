@@ -6,6 +6,7 @@
 #' @param pattern Regular expression used to extract the fields values.
 #' @param fields Fields that uniquely identify the data from a file.
 #' @return A list containing the field names and their values.
+#' @import stringr
 #' @examples
 #' parse.fname('results-1-simple.csv', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
 parse.fname <- function(fname, pattern, fields) {
@@ -26,6 +27,8 @@ parse.fname <- function(fname, pattern, fields) {
 #' @param fields Fields that uniquely identify the data from a CSV file.
 #' @param custom.func Function for post-processing the data. Defaults to NULL.
 #' @return A data.table object containing the data read from the CSV file.
+#' @import data.table
+#' @export
 #' @examples
 #' load.data.file('results-1-simple.csv', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
 load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
@@ -33,7 +36,7 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
   dt <- data.table::data.table(read.csv(fname))
   info <- parse.fname(fname, pattern, fields)
   dt[, (fields) := info]
-  
+
   if (is.null(custom.func)) dt
   else custom.func(dt)
 }
@@ -47,14 +50,20 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
 #' @param pattern Regular expression used to search the CSV files and extract
 #'     the fields values too.
 #' @param fields Fields that uniquely identify the data from a CSV file.
-#' @param custom.func Custom function to be used when processing a single CSV
+#' @param local.func Custom function to be called after reading a single CSV
 #'     file. Defaults to NULL.
+#' @param global.func Custom function to be called after all the data tables
+#'     have been merged into a single one. Defaults to NULL.
 #' @return A data.table object containing the data read from the CSV files.
+#' @export
 #' @examples
 #' load.data('.', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
-load.data <- function(path, pattern, fields, custom.func = NULL) {
+load.data <- function(path, pattern, fields, local.func = NULL, global.func = NULL) {
   assert(length(fields) >= 1, 'Empty field list')
   file.list <- list.files(path, pattern, recursive = T, full.names = T)
-  dt.list <- lapply(file.list, function(fname) { load.data.file(fname, pattern, fields, custom.func) })
-  do.call(rbind, dt.list)
+  dt.list <- lapply(file.list, function(fname) { load.data.file(fname, pattern, fields, local.func) })
+  dt <- do.call(rbind, dt.list)
+
+  if (is.null(global.func)) dt
+  else global.func(dt)
 }
