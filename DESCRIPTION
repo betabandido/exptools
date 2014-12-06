@@ -1,0 +1,15 @@
+Package: exptools
+Title: Useful tools for computer science research experiments.
+Version: 0.1
+Authors@R: "Victor Jimenez <betabandido@gmail.com> [aut, cre]"
+Description: This package is a collection of useful tools for helping with
+    processing experimental results in the field of computer science research.
+    Although that is the primary intention, parts of this package might as
+    well be useful for processing data in other research fields.
+Depends:
+    R (>= 3.1.2)
+Imports:
+    data.table,
+    stringr,
+License: GPL-2
+LazyData: true
