@@ -60,7 +60,7 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
 #' load.data('.', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
 load.data <- function(path, pattern, fields, local.func = NULL, global.func = NULL) {
   assert(length(fields) >= 1, 'Empty field list')
-  file.list <- list.files(path, pattern, recursive = T, full.names = T)
+  file.list <- .list.files(path, pattern)
   dt.list <- lapply(file.list, function(fname) { load.data.file(fname, pattern, fields, local.func) })
   dt <- do.call(rbind, dt.list)
 
