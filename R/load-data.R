@@ -8,7 +8,9 @@
 #' @return A list containing the field names and their values.
 #' @import stringr
 #' @examples
+#' \dontrun{
 #' parse.fname('results-1-simple.csv', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
+#' }
 parse.fname <- function(fname, pattern, fields) {
   assert(length(fields) >= 1, 'Empty field list')
   m <- stringr::str_match(fname, pattern)
@@ -30,7 +32,9 @@ parse.fname <- function(fname, pattern, fields) {
 #' @import data.table
 #' @export
 #' @examples
+#' \dontrun{
 #' load.data.file('results-1-simple.csv', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
+#' }
 load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
   print(sprintf('Reading %s', fname))
   dt <- data.table::data.table(read.csv(fname))
@@ -57,7 +61,9 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
 #' @return A data.table object containing the data read from the CSV files.
 #' @export
 #' @examples
+#' \dontrun{
 #' load.data('.', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
+#' }
 load.data <- function(path, pattern, fields, local.func = NULL, global.func = NULL) {
   assert(length(fields) >= 1, 'Empty field list')
   file.list <- .list.files(path, pattern)
