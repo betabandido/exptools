@@ -74,7 +74,9 @@ load.data <- function(path,
                       local.func = NULL,
                       global.func = NULL) {
   assert(length(fields) >= 1, 'Empty field list')
+
   file.list <- .list.files(path, pattern)
+  assert(length(file.list) > 0, 'No match was found')
   dt.list <- lapply(file.list,
                     function(fname) {
                       load.data.file(fname, pattern, fields, local.func)
