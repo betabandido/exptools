@@ -3,15 +3,21 @@ context("Load data")
 
 test_that("Fields are correctly parsed in parse.fname", {
   expect_identical(
-    parse.fname('test-1.csv', 'test-(\\d+)\\.csv', c('ID')),
+    parse.fname('test-1.csv',
+                'test-(\\d+)\\.csv',
+                c('ID')),
     list('ID' = '1'))
   
   expect_identical(
-    parse.fname('test-A-1.csv', 'test-(\\w+)-(\\d+)\\.csv', c('CFG', 'ID')),
+    parse.fname('test-A-1.csv',
+                'test-(\\w+)-(\\d+)\\.csv',
+                c('CFG', 'ID')),
     list('CFG' = 'A', 'ID' = '1'))
 
   expect_identical(
-    parse.fname('results-simple/test-A-1.csv', 'results-(\\w+)/test-(\\w+)-(\\d+)\\.csv', c('METHOD', 'CFG', 'ID')),
+    parse.fname('results-simple/test-A-1.csv',
+                'results-(\\w+)/test-(\\w+)-(\\d+)\\.csv',
+                c('METHOD', 'CFG', 'ID')),
     list('METHOD' = 'simple', 'CFG' = 'A', 'ID' = '1'))
 })
 
@@ -43,3 +49,4 @@ test_that("load.data.file passes a minimal test", {
                        function(dt) { dt[, Y := 2 * Y]})
   expect_true(all(dt$Y == 2 * dt$X ^ 2))
 })
+

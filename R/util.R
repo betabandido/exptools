@@ -41,7 +41,14 @@ curry <- function (func, ...) {
 #' }
 .list.files <- function(path, pattern) {
   fname.pattern <- tail(strsplit(pattern, '/')[[1]], n = 1)
-  file.list <- base::list.files(path, fname.pattern, recursive = T, full.names = T)
+  file.list <- base::list.files(path,
+                                fname.pattern,
+                                recursive = T,
+                                full.names = T)
   if (length(file.list) > 0)
-    file.list[sapply(file.list, function(path) { all(is.na(str_match(path, pattern)) == FALSE) })]
+    file.list[sapply(file.list,
+                     function(path) {
+                       all(is.na(str_match(path, pattern)) == FALSE)
+                     })]
 }
+

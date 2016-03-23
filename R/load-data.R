@@ -9,7 +9,9 @@
 #' @import stringr
 #' @examples
 #' \dontrun{
-#' parse.fname('results-1-simple.csv', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
+#' parse.fname('results-1-simple.csv',
+#'             'results-(\\d+)-(\\w+)\\.csv',
+#'             c('ID', 'config'))
 #' }
 parse.fname <- function(fname, pattern, fields) {
   assert(length(fields) >= 1, 'Empty field list')
@@ -33,7 +35,9 @@ parse.fname <- function(fname, pattern, fields) {
 #' @export
 #' @examples
 #' \dontrun{
-#' load.data.file('results-1-simple.csv', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
+#' load.data.file('results-1-simple.csv',
+#'                'results-(\\d+)-(\\w+)\\.csv',
+#'                c('ID', 'config'))
 #' }
 load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
   print(sprintf('Reading %s', fname))
@@ -64,12 +68,20 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
 #' \dontrun{
 #' load.data('.', 'results-(\\d+)-(\\w+)\\.csv', c('ID', 'config'))
 #' }
-load.data <- function(path, pattern, fields, local.func = NULL, global.func = NULL) {
+load.data <- function(path,
+                      pattern,
+                      fields,
+                      local.func = NULL,
+                      global.func = NULL) {
   assert(length(fields) >= 1, 'Empty field list')
   file.list <- .list.files(path, pattern)
-  dt.list <- lapply(file.list, function(fname) { load.data.file(fname, pattern, fields, local.func) })
+  dt.list <- lapply(file.list,
+                    function(fname) {
+                      load.data.file(fname, pattern, fields, local.func)
+                    })
   dt <- do.call(rbind, dt.list)
 
   if (is.null(global.func)) dt
   else global.func(dt)
 }
+
