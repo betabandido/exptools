@@ -55,18 +55,16 @@ test_that('parse.fname correctly parses fields', {
 })
 
 test_that('load.data.file fails if file does not exist', {
-  expect_warning(
-    expect_error(
-      load.data.file('foobar-1', '.*-(\\d+)', c('NUM')),
-      'cannot open the connection'
-    ),
-    'No such file or directory'
+  expect_error(
+    load.data.file('foobar-1', '.*-(\\d+)', c('NUM')),
+    'File .* does not exist'
   )
 })
 
 test_that('load.data.file parses field', {
   with_mock(
-    read.csv = function(...) data.table::data.table(X = 1:5, Y = (1:5) ^ 2),
+    `data.table::fread` = function(...)
+        data.table::data.table(X = 1:5, Y = (1:5) ^ 2),
     dt <- load.data.file(
       'test-foo.csv',
       'test-(\\w+)\\.csv',
@@ -79,7 +77,8 @@ test_that('load.data.file parses field', {
 
 test_that('load.data.file uses custom function', {
   with_mock(
-    read.csv = function(...) data.table::data.table(X = 1:5, Y = (1:5) ^ 2),
+    `data.table::fread` = function(...)
+        data.table::data.table(X = 1:5, Y = (1:5) ^ 2),
     dt <- load.data.file(
       'test-foo.csv',
       'test-(\\w+)\\.csv',

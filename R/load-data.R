@@ -43,7 +43,7 @@ parse.fname <- function(fname, pattern, fields) {
 #' }
 load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
   print(sprintf('Reading %s', fname))
-  dt <- data.table::data.table(read.csv(fname))
+  dt <- data.table::data.table(data.table::fread(fname))
   info <- parse.fname(fname, pattern, fields)
   dt[, (fields) := info]
 
