@@ -1,5 +1,5 @@
 #' Parses a file name and returns the values for the requested fields
-#' 
+#'
 #' This function parses a file name and matches the name to the given pattern.
 #' Then it extracts the values for the requested files.
 #' @param fname file name.
@@ -14,6 +14,8 @@
 #'             c('ID', 'config'))
 #' }
 parse.fname <- function(fname, pattern, fields) {
+  assert(nchar(fname) > 0, 'Empty filename')
+  assert(nchar(pattern) > 0, 'Empty pattern')
   assert(length(fields) >= 1, 'Empty field list')
   m <- stringr::str_match(fname, pattern)
   assert(length(m) == length(fields) + 1, 'Wrong number of fields')
@@ -22,7 +24,7 @@ parse.fname <- function(fname, pattern, fields) {
 }
 
 #' Loads data from a CSV file
-#' 
+#'
 #' This function loads data from the given CSV file and it adds some extra
 #' data coming from the fields in the file name. The number of capture groups
 #' in the regular expression (pattern) must match the number of fields.
@@ -50,7 +52,7 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
 }
 
 #' Loads data from multiple CSV files and combines the data into a data.table
-#' 
+#'
 #' This function searches for CSV files matching a pattern in the given path
 #' and combines all the data into a data.table object. The number of capture
 #' groups in the regular expression (pattern) must match the number of fields.
