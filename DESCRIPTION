@@ -1,5 +1,5 @@
 Package: exptools
-Title: Useful tools for computer science research experiments.
+Title: Useful tools for computer science research experiments
 Version: 0.1
 Authors@R: "Victor Jimenez <betabandido@gmail.com> [aut, cre]"
 Description: This package is a collection of useful tools for helping with
