@@ -61,6 +61,16 @@ test_that('load.data.file fails if file does not exist', {
   )
 })
 
+test_that('load.data.file fails with no fields', {
+  with_mock(
+    `data.table::fread` = function(...) data.table::data.table(),
+    expect_error(
+      load.data.file('test.csv', '.*', c()),
+      'Empty field list'
+    )
+  )
+})
+
 test_that('load.data.file parses field', {
   with_mock(
     `data.table::fread` = function(...)
@@ -88,5 +98,54 @@ test_that('load.data.file uses custom function', {
     expect_true(all(dt$FOO == 'foo')),
     expect_true(all(dt$Y == dt$X ^ 2)),
     expect_true(all(dt$Z == 2 * dt$Y))
+  )
+})
+
+test_that('load.data fails if no match is found', {
+  with_mock(
+    .list.files = function(...) c(character(0)),
+    expect_error(
+      load.data('.', '.*', c('FOO')),
+      'No match was found'
+    )
+  )
+})
+
+test_that('load.data combines files', {
+  dt.list <- list(
+    data.table::data.table(X = 1:5, Y = 1 * (1:5) ^ 2),
+    data.table::data.table(X = 1:5, Y = 2 * (1:5) ^ 2),
+    data.table::data.table(X = 1:5, Y = 1 * (1:5) ^ 3),
+    data.table::data.table(X = 1:5, Y = 2 * (1:5) ^ 3)
+  )
+
+  make.data.generator <- function() {
+    idx <- 0
+    gen <- function() {
+      idx <<- idx + 1
+      assert(idx <= length(dt.list))
+      return(dt.list[[idx]])
+    }
+    return(gen)
+  }
+
+  data.generator <- make.data.generator()
+
+  expected.dt <- do.call(rbind, dt.list)
+  expected.dt[, FOO := c(rep('foo', 10), rep('bar', 10))]
+  expected.dt[, NUM := c(rep('1', 5), rep('2', 5), rep('1', 5), rep('2', 5))]
+
+  with_mock(
+    .list.files = function(...)
+      c('./res-foo/1.csv',
+        './res-foo/2.csv',
+        './res-bar/1.csv',
+        './res-bar/2.csv'),
+    `data.table::fread` = function(...) data.generator(),
+    dt <- load.data(
+      '.',
+      './res-(\\w+)/(\\d+)\\.csv',
+      c('FOO', 'NUM')),
+    expect_identical(dt, expected.dt)
   )
 })

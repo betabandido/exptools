@@ -42,7 +42,6 @@ parse.fname <- function(fname, pattern, fields) {
 #'                c('ID', 'config'))
 #' }
 load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
-  print(sprintf('Reading %s', fname))
   dt <- data.table::data.table(data.table::fread(fname))
   info <- parse.fname(fname, pattern, fields)
   dt[, (fields) := info]
@@ -75,8 +74,6 @@ load.data <- function(path,
                       fields,
                       local.func = NULL,
                       global.func = NULL) {
-  assert(length(fields) >= 1, 'Empty field list')
-
   file.list <- .list.files(path, pattern)
   assert(length(file.list) > 0, 'No match was found')
   dt.list <- lapply(file.list,
