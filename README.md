@@ -1,5 +1,7 @@
 # exptools
 
+[![Build Status](https://travis-ci.org/betabandido/exptools.svg?branch=master)](https://travis-ci.org/betabandido/exptools)
+
 This package is a collection of useful tools for helping with
 processing experimental results in the field of computer science research.
 Although that is the primary intention, parts of this package might as
