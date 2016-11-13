@@ -103,7 +103,7 @@ test_that('load.data.file uses custom function', {
 
 test_that('load.data fails if no match is found', {
   with_mock(
-    .list.files = function(...) c(character(0)),
+    `exptools::.list.files` = function(...) c(character(0)),
     expect_error(
       load.data('.', '.*', c('FOO')),
       'No match was found'
@@ -136,7 +136,7 @@ test_that('load.data combines files', {
   expected.dt[, NUM := c(rep('1', 5), rep('2', 5), rep('1', 5), rep('2', 5))]
 
   with_mock(
-    .list.files = function(...)
+    `exptools::.list.files` = function(...)
       c('./res-foo/1.csv',
         './res-foo/2.csv',
         './res-bar/1.csv',

@@ -45,7 +45,7 @@ curry <- function (func, ...) {
   assert(is.character(pattern) && pattern != '',
          'pattern must be a non-empty string')
 
-  fname.pattern <- tail(strsplit(pattern, '/')[[1]], n = 1)
+  fname.pattern <- utils::tail(strsplit(pattern, '/')[[1]], n = 1)
   file.list <- base::list.files(path,
                                 fname.pattern,
                                 recursive = T,

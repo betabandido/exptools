@@ -20,7 +20,7 @@ parse.fname <- function(fname, pattern, fields) {
   m <- stringr::str_match(fname, pattern)
   assert(length(m) == length(fields) + 1, 'Wrong number of fields')
   assert(all(is.na(m)) == FALSE, 'Pattern did not match file name')
-  return(setNames(as.list(m[2:length(m)]), fields))
+  return(stats::setNames(as.list(m[2:length(m)]), fields))
 }
 
 #' Loads data from a CSV file
