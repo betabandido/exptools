@@ -4,7 +4,8 @@
 \alias{load.data}
 \title{Loads data from multiple CSV files and combines the data into a data.table}
 \usage{
-load.data(path, pattern, fields, local.func = NULL, global.func = NULL)
+load.data(path, pattern, fields, local.func = NULL, global.func = NULL,
+  fill = FALSE, ...)
 }
 \arguments{
 \item{path}{Path where to search for the CSV files.}
@@ -19,6 +20,10 @@ file. Defaults to NULL.}
 
 \item{global.func}{Custom function to be called after all the data tables
 have been merged into a single one. Defaults to NULL.}
+
+\item{fill}{Whether to fill missing columns due to inconsistent CSV files.}
+
+\item{...}{Arguments to pass to data.table::fread().}
 }
 \value{
 A data.table object containing the data read from the CSV files.

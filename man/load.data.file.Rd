@@ -4,7 +4,7 @@
 \alias{load.data.file}
 \title{Loads data from a CSV file}
 \usage{
-load.data.file(fname, pattern, fields, custom.func = NULL)
+load.data.file(fname, pattern, fields, custom.func = NULL, ...)
 }
 \arguments{
 \item{fname}{CSV file name.}
@@ -14,6 +14,8 @@ load.data.file(fname, pattern, fields, custom.func = NULL)
 \item{fields}{Fields that uniquely identify the data from a CSV file.}
 
 \item{custom.func}{Function for post-processing the data. Defaults to NULL.}
+
+\item{...}{Arguments to pass to data.table::fread().}
 }
 \value{
 A data.table object containing the data read from the CSV file.

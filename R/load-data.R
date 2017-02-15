@@ -32,6 +32,7 @@ parse.fname <- function(fname, pattern, fields) {
 #' @param pattern Regular expression used to extract the fields values.
 #' @param fields Fields that uniquely identify the data from a CSV file.
 #' @param custom.func Function for post-processing the data. Defaults to NULL.
+#' @param ... Arguments to pass to data.table::fread().
 #' @return A data.table object containing the data read from the CSV file.
 #' @import data.table
 #' @export
@@ -41,8 +42,9 @@ parse.fname <- function(fname, pattern, fields) {
 #'                'results-(\\d+)-(\\w+)\\.csv',
 #'                c('ID', 'config'))
 #' }
-load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
-  dt <- data.table::data.table(data.table::fread(fname))
+load.data.file <- function(fname, pattern, fields, custom.func = NULL, ...) {
+  print(sprintf('Loading: %s', fname))
+  dt <- data.table::data.table(data.table::fread(fname, ...))
   info <- parse.fname(fname, pattern, fields)
   dt[, (fields) := info]
 
@@ -63,6 +65,8 @@ load.data.file <- function(fname, pattern, fields, custom.func = NULL) {
 #'     file. Defaults to NULL.
 #' @param global.func Custom function to be called after all the data tables
 #'     have been merged into a single one. Defaults to NULL.
+#' @param fill Whether to fill missing columns due to inconsistent CSV files.
+#' @param ... Arguments to pass to data.table::fread().
 #' @return A data.table object containing the data read from the CSV files.
 #' @export
 #' @examples
@@ -73,14 +77,16 @@ load.data <- function(path,
                       pattern,
                       fields,
                       local.func = NULL,
-                      global.func = NULL) {
+                      global.func = NULL,
+                      fill = FALSE,
+                      ...) {
   file.list <- .list.files(path, pattern)
   assert(length(file.list) > 0, 'No match was found')
   dt.list <- lapply(file.list,
                     function(fname) {
-                      load.data.file(fname, pattern, fields, local.func)
+                      load.data.file(fname, pattern, fields, local.func, ...)
                     })
-  dt <- do.call(rbind, dt.list)
+  dt <- rbindlist(dt.list, use.names = TRUE, fill = fill)
 
   if (is.null(global.func)) dt
   else global.func(dt)
