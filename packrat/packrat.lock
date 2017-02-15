@@ -3,15 +3,30 @@ PackratVersion: 0.4.8.1
 RVersion: 3.3.2
 Repos: CRAN=https://cran.rstudio.com/
 
+Package: ISLR
+Source: CRAN
+Version: 1.0
+Hash: 4237d9b22334fd7980d2a6b6739a14ef
+
 Package: R6
 Source: CRAN
 Version: 2.1.2
 Hash: c515e41c73294952cbb33ee1c1be5a2d
 
+Package: RColorBrewer
+Source: CRAN
+Version: 1.1-2
+Hash: c0d56cd15034f395874c870141870c25
+
 Package: Rcpp
 Source: CRAN
 Version: 0.12.7
 Hash: f0ba7322cfb66f1b563462faa9c2b2ab
+
+Package: assertthat
+Source: CRAN
+Version: 0.1
+Hash: 0afb92b59b02593c70ff8046700ba9d3
 
 Package: brew
 Source: CRAN
@@ -22,6 +37,11 @@ Package: chron
 Source: CRAN
 Version: 2.3-47
 Hash: d25d96d908cd21080f24c89eed4c80a0
+
+Package: colorspace
+Source: CRAN
+Version: 1.3-2
+Hash: 0bf8618b585fa98eb23414cd3ab95118
 
 Package: crayon
 Source: CRAN
@@ -35,9 +55,8 @@ Hash: 4533829fb0026bd0dea77ba8f1612d37
 
 Package: data.table
 Source: CRAN
-Version: 1.9.6
-Hash: f92ef1f73afa43bf6fd69a22f3794abd
-Requires: chron
+Version: 1.10.4
+Hash: 2c7c47ccb40d01c7b214c8eff818108d
 
 Package: devtools
 Source: CRAN
@@ -46,15 +65,31 @@ Hash: bbad95109ae75cbb14099281cda43af2
 Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
     withr
 
+Package: dichromat
+Source: CRAN
+Version: 2.0-0
+Hash: 08eed0c80510af29bb15f840ccfe37ce
+
 Package: digest
 Source: CRAN
 Version: 0.6.9
 Hash: fd55d5a024f160fc001a5ece1e27782d
 
+Package: ggplot2
+Source: CRAN
+Version: 2.2.1
+Hash: 46e5cb78836848aa44655e577433f54b
+Requires: digest, gtable, lazyeval, plyr, reshape2, scales, tibble
+
 Package: git2r
 Source: CRAN
 Version: 0.15.0
 Hash: 92d5a9f3cba5e146b92a76dabbc29fbb
+
+Package: gtable
+Source: CRAN
+Version: 0.2.0
+Hash: cd78381a9d3fea966ac39bd0daaf5554
 
 Package: httr
 Source: CRAN
@@ -66,6 +101,22 @@ Package: jsonlite
 Source: CRAN
 Version: 1.1
 Hash: 86d4b85b84421a4815f1bb4872e30ef4
+
+Package: labeling
+Source: CRAN
+Version: 0.3
+Hash: ecf589b42cd284b03a4beb9665482d3e
+
+Package: latticeExtra
+Source: CRAN
+Version: 0.6-28
+Hash: efdf3a10a129129f7b8f4ae5a0d7ec3d
+Requires: RColorBrewer
+
+Package: lazyeval
+Source: CRAN
+Version: 0.2.0
+Hash: 3d6e7608e65bbf5cb170dab1e3c9ed8b
 
 Package: magrittr
 Source: CRAN
@@ -83,6 +134,12 @@ Source: CRAN
 Version: 0.5
 Hash: 463550cf44fb6f0a2359368f42eebe62
 
+Package: munsell
+Source: CRAN
+Version: 0.4.3
+Hash: f96d896947fcaf9b6d0074002e9f4f9d
+Requires: colorspace
+
 Package: openssl
 Source: CRAN
 Version: 0.9.5
@@ -93,10 +150,27 @@ Source: CRAN
 Version: 0.4.8-1
 Hash: 6ad605ba7b4b476d84be6632393f5765
 
+Package: plyr
+Source: CRAN
+Version: 1.8.4
+Hash: 75ca080b10a9314a9b293964331e5df7
+Requires: Rcpp
+
 Package: praise
 Source: CRAN
 Version: 1.0.0
 Hash: 77da8f1df873a4b91e5c4a68fe2fb1b6
+
+Package: randomForest
+Source: CRAN
+Version: 4.6-12
+Hash: b37274857316c7b9431cc7f72aaffb77
+
+Package: reshape2
+Source: CRAN
+Version: 1.4.2
+Hash: e67d3313d2413c398da41eba4a4e7520
+Requires: Rcpp, plyr, stringr
 
 Package: roxygen2
 Source: CRAN
@@ -108,6 +182,12 @@ Package: rstudioapi
 Source: CRAN
 Version: 0.6
 Hash: fd256f8bfb9a64cc35f98b0decb1a79f
+
+Package: scales
+Source: CRAN
+Version: 0.4.1
+Hash: c0b89e928595f6133fe9d5dc139060b0
+Requires: RColorBrewer, Rcpp, dichromat, labeling, munsell, plyr
 
 Package: stringi
 Source: CRAN
@@ -125,6 +205,17 @@ Source: CRAN
 Version: 1.0.2
 Hash: 88d5291104227f9dc2e7c7c1d0eb6c74
 Requires: R6, crayon, digest, magrittr, praise
+
+Package: tibble
+Source: CRAN
+Version: 1.2
+Hash: 3b35b556ef7acddb0d28fe6a27ad50e4
+Requires: Rcpp, assertthat, lazyeval
+
+Package: tree
+Source: CRAN
+Version: 1.0-37
+Hash: cadc8c708e9e07f81647c53d5245d081
 
 Package: whisker
 Source: CRAN
